@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun, Menu, X } from "lucide-react";
 
 export default function Header() {
   const [isDark, setIsDark] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("overview");
 
   const toggleTheme = () => {
     setIsDark(!isDark);
@@ -15,8 +16,27 @@ export default function Header() {
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
     setIsMobileMenuOpen(false);
+    setActiveSection(sectionId);
     console.log(`Scrolled to ${sectionId}`);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["overview", "methodology", "results", "team"];
+      const scrollPosition = window.scrollY + 100;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -30,28 +50,44 @@ export default function Header() {
         <nav className="hidden md:flex items-center space-x-8">
           <button
             onClick={() => scrollToSection("overview")}
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              activeSection === "overview" 
+                ? "text-primary border-b-2 border-primary pb-1" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
             data-testid="link-overview"
           >
             Overview
           </button>
           <button
             onClick={() => scrollToSection("methodology")}
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              activeSection === "methodology" 
+                ? "text-primary border-b-2 border-primary pb-1" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
             data-testid="link-methodology"
           >
             Methodology
           </button>
           <button
             onClick={() => scrollToSection("results")}
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              activeSection === "results" 
+                ? "text-primary border-b-2 border-primary pb-1" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
             data-testid="link-results"
           >
             Results
           </button>
           <button
             onClick={() => scrollToSection("team")}
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              activeSection === "team" 
+                ? "text-primary border-b-2 border-primary pb-1" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
             data-testid="link-team"
           >
             Team
@@ -82,32 +118,48 @@ export default function Header() {
 
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t bg-background">
+        <div className="md:hidden border-t bg-background animate-in slide-in-from-top-5 duration-200">
           <nav className="flex flex-col space-y-4 p-4">
             <button
               onClick={() => scrollToSection("overview")}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
+              className={`text-sm font-medium transition-colors text-left ${
+                activeSection === "overview" 
+                  ? "text-primary font-semibold" 
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
               data-testid="mobile-link-overview"
             >
               Overview
             </button>
             <button
               onClick={() => scrollToSection("methodology")}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
+              className={`text-sm font-medium transition-colors text-left ${
+                activeSection === "methodology" 
+                  ? "text-primary font-semibold" 
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
               data-testid="mobile-link-methodology"
             >
               Methodology
             </button>
             <button
               onClick={() => scrollToSection("results")}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
+              className={`text-sm font-medium transition-colors text-left ${
+                activeSection === "results" 
+                  ? "text-primary font-semibold" 
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
               data-testid="mobile-link-results"
             >
               Results
             </button>
             <button
               onClick={() => scrollToSection("team")}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
+              className={`text-sm font-medium transition-colors text-left ${
+                activeSection === "team" 
+                  ? "text-primary font-semibold" 
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
               data-testid="mobile-link-team"
             >
               Team

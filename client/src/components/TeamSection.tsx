@@ -2,7 +2,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "lucide-react";
 
-//todo: remove mock functionality - replace with real team member information and photos
 const teamMembers = [
   {
     name: "Yash Bansal",

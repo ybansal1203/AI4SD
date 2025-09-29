@@ -50,7 +50,7 @@ export default function MethodologySection() {
 
           {/* Phase 1 Content */}
           {selectedPhase === 1 && (
-            <div className="space-y-8" data-testid="content-phase-1">
+            <div className="space-y-8 animate-in fade-in-50 duration-300" data-testid="content-phase-1">
               <div className="grid md:grid-cols-2 gap-6">
                 <Card className="hover-elevate">
                   <CardHeader>
@@ -127,7 +127,7 @@ export default function MethodologySection() {
 
           {/* Phase 2 Content */}
           {selectedPhase === 2 && (
-            <div className="space-y-8" data-testid="content-phase-2">
+            <div className="space-y-8 animate-in fade-in-50 duration-300" data-testid="content-phase-2">
               <div className="grid md:grid-cols-2 gap-6">
                 <Card className="hover-elevate">
                   <CardHeader>
