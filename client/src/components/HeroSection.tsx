@@ -23,7 +23,7 @@ export default function HeroSection() {
         <div className="max-w-4xl mx-auto space-y-6">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground" data-testid="text-hero-title">
             Robust Domain-Generalizable AI for{" "}
-            <span className="text-primary">Chest X-Ray Disease Classification</span>
+            <span className="text-primary dark:text-chart-2">Chest X-Ray Disease Classification</span>
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed" data-testid="text-hero-description">
