@@ -1,8 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Mail, ExternalLink, User } from "lucide-react";
-import teamPhoto from "@assets/generated_images/Academic_team_photo_67fcf533.png";
+import { User } from "lucide-react";
 
 //todo: remove mock functionality - replace with real team member information and photos
 const teamMembers = [
@@ -50,25 +48,12 @@ export default function TeamSection() {
             </p>
           </div>
 
-          {/* Team Photo */}
-          <Card className="hover-elevate" data-testid="card-team-photo">
-            <CardContent className="p-6">
-              <div className="flex justify-center">
-                <img 
-                  src={teamPhoto} 
-                  alt="AI4SD Team Members"
-                  className="max-w-full h-auto rounded-lg"
-                  data-testid="img-team-photo"
-                />
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Individual Team Members */}
           <div className="grid md:grid-cols-2 gap-6">
             {teamMembers.map((member, index) => (
               <Card key={index} className="hover-elevate" data-testid={`card-member-${member.initials.toLowerCase()}`}>
-                <CardHeader>
+                <CardContent className="p-6">
                   <div className="flex items-center gap-4">
                     <Avatar className="w-16 h-16">
                       <AvatarImage src="" alt={member.name} />
@@ -77,29 +62,10 @@ export default function TeamSection() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <CardTitle className="text-xl" data-testid={`text-name-${member.initials.toLowerCase()}`}>
+                      <h3 className="text-xl font-semibold" data-testid={`text-name-${member.initials.toLowerCase()}`}>
                         {member.name}
-                      </CardTitle>
-                      <CardDescription className="text-base" data-testid={`text-role-${member.initials.toLowerCase()}`}>
-                        {member.role}
-                      </CardDescription>
+                      </h3>
                     </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground" data-testid={`text-description-${member.initials.toLowerCase()}`}>
-                    {member.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {member.expertise.map((skill, skillIndex) => (
-                      <Badge 
-                        key={skillIndex} 
-                        variant="secondary"
-                        data-testid={`badge-skill-${member.initials.toLowerCase()}-${skillIndex}`}
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
                   </div>
                 </CardContent>
               </Card>

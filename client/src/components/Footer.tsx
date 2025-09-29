@@ -14,7 +14,7 @@ export default function Footer() {
           <Card className="p-6">
             <div className="text-center space-y-4">
               <h3 className="text-xl font-semibold" data-testid="text-sdgs-title">
-                Contributing to UN Sustainable Development Goals
+                Contributing to Sustainable Development Goals
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="flex flex-col items-center gap-2" data-testid="sdg-3">
