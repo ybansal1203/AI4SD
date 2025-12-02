@@ -4,32 +4,28 @@ import { User } from "lucide-react";
 
 const teamMembers = [
   {
-    name: "Yash Bansal",
-    role: "Project Lead & ML Engineer",
-    initials: "YB",
-    expertise: ["Deep Learning", "Medical AI", "Domain Adaptation"],
-    description: "Leading the research initiative and model development with focus on domain generalization techniques."
+    name: "Hanie Kang",
+    email: "hanie.kang@usc.edu",
+    initials: "HK",
+    contributions: ["Related Work Literature Reviews", "Code Implementation & Model Training"]
+  },
+  {
+    name: "Juann Kim",
+    email: "juannkim@usc.edu",
+    initials: "JK",
+    contributions: ["Data Collection & Preprocessing", "Code Implementation & Model Training"]
   },
   {
     name: "Kyoungeui Hong",
-    role: "Data Scientist & Researcher",
+    email: "hongkyou@usc.edu",
     initials: "KH", 
-    expertise: ["Data Analysis", "Statistical Modeling", "Computer Vision"],
-    description: "Specializing in data preprocessing, augmentation strategies, and statistical validation of results."
+    contributions: ["Data Collection & Preprocessing", "Web Development"]
   },
   {
-    name: "Hanie Kang",
-    role: "ML Researcher & Algorithm Developer",
-    initials: "HK",
-    expertise: ["Contrastive Learning", "Neural Networks", "Medical Imaging"],
-    description: "Developing contrastive learning frameworks and novel architectural improvements for medical imaging."
-  },
-  {
-    name: "Juann Kim", 
-    role: "Research Scientist & Evaluator",
-    initials: "JK",
-    expertise: ["Model Evaluation", "Healthcare AI", "Ethics in AI"],
-    description: "Focusing on comprehensive model evaluation, ethical considerations, and clinical applicability."
+    name: "Yash Bansal",
+    email: "ybansal@usc.edu",
+    initials: "YB",
+    contributions: ["Related Work Literature Reviews", "Data Visualization and Web Development"]
   }
 ];
 
@@ -51,19 +47,30 @@ export default function TeamSection() {
           {/* Individual Team Members */}
           <div className="grid md:grid-cols-2 gap-6">
             {teamMembers.map((member, index) => (
-              <Card key={index} className="hover-elevate" data-testid={`card-member-${member.initials.toLowerCase()}`}>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4">
-                    <Avatar className="w-16 h-16">
+              <Card key={index} className="hover-elevate transition-all duration-300" data-testid={`card-member-${member.initials.toLowerCase()}`}>
+                <CardContent className="p-8">
+                  <div className="flex flex-col items-center text-center space-y-6">
+                    <Avatar className="w-24 h-24 border-4 border-primary/10">
                       <AvatarImage src="" alt={member.name} />
-                      <AvatarFallback className="text-lg font-semibold bg-primary text-primary-foreground">
+                      <AvatarFallback className="text-2xl font-bold bg-primary text-primary-foreground">
                         {member.initials}
                       </AvatarFallback>
                     </Avatar>
-                    <div>
-                      <h3 className="text-xl font-semibold" data-testid={`text-name-${member.initials.toLowerCase()}`}>
+                    <div className="space-y-2 w-full">
+                      <h3 className="text-2xl font-bold tracking-tight" data-testid={`text-name-${member.initials.toLowerCase()}`}>
                         {member.name}
                       </h3>
+                      <p className="text-sm text-muted-foreground font-medium">{member.email}</p>
+                    </div>
+                    <div className="w-full pt-4 border-t">
+                      <p className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">Contributions</p>
+                      <ul className="space-y-2.5">
+                        {member.contributions.map((contribution, idx) => (
+                          <li key={idx} className="text-sm text-muted-foreground leading-relaxed">
+                            {contribution}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </CardContent>

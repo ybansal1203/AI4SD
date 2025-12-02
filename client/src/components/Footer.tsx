@@ -16,7 +16,7 @@ export default function Footer() {
               <h3 className="text-xl font-semibold" data-testid="text-sdgs-title">
                 Contributing to Sustainable Development Goals
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-md mx-auto">
                 <div className="flex flex-col items-center gap-2" data-testid="sdg-3">
                   <div className="w-12 h-12 rounded-full bg-chart-3/20 flex items-center justify-center">
                     <Heart className="h-6 w-6 text-chart-3" />
@@ -26,15 +26,6 @@ export default function Footer() {
                     Good Health & Well-being
                   </p>
                 </div>
-                <div className="flex flex-col items-center gap-2" data-testid="sdg-9">
-                  <div className="w-12 h-12 rounded-full bg-chart-4/20 flex items-center justify-center">
-                    <Zap className="h-6 w-6 text-chart-4" />
-                  </div>
-                  <Badge variant="outline">SDG 9</Badge>
-                  <p className="text-xs text-center text-muted-foreground">
-                    Innovation & Infrastructure
-                  </p>
-                </div>
                 <div className="flex flex-col items-center gap-2" data-testid="sdg-10">
                   <div className="w-12 h-12 rounded-full bg-chart-5/20 flex items-center justify-center">
                     <Users2 className="h-6 w-6 text-chart-5" />
@@ -42,15 +33,6 @@ export default function Footer() {
                   <Badge variant="outline">SDG 10</Badge>
                   <p className="text-xs text-center text-muted-foreground">
                     Reduced Inequalities
-                  </p>
-                </div>
-                <div className="flex flex-col items-center gap-2" data-testid="sdg-17">
-                  <div className="w-12 h-12 rounded-full bg-chart-1/20 flex items-center justify-center">
-                    <Globe className="h-6 w-6 text-chart-1" />
-                  </div>
-                  <Badge variant="outline">SDG 17</Badge>
-                  <p className="text-xs text-center text-muted-foreground">
-                    Partnerships for Goals
                   </p>
                 </div>
               </div>

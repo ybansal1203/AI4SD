@@ -5,32 +5,22 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { TrendingUp, Award, Target, Eye } from "lucide-react";
 import { useState } from "react";
 
-// Research results data based on AI4SD project findings
-const baselineResults = [
-  { dataset: "MIMIC-CXR", auc: 0.847, label: "Source Domain" },
-  { dataset: "ChestX-ray14", auc: 0.712, label: "Target Domain" }
+// Phase-1 baseline results from PDF - exact values
+const phase1Results = [
+  { model: "DenseNet-121", macroAUROC: 0.6865, macroAUPRC: 0.1434, tn: 4558, fp: 2075, fn: 208, tp: 327 },
+  { model: "ResNet-50", macroAUROC: 0.6759, macroAUPRC: 0.1342, tn: 4359, fp: 2274, fn: 202, tp: 333 },
+  { model: "ViT-B/16", macroAUROC: 0.5699, macroAUPRC: 0.1069, tn: 3601, fp: 3032, fn: 243, tp: 292 },
 ];
 
-const improvedResults = [
-  { dataset: "MIMIC-CXR", auc: 0.851, label: "Source Domain" },
-  { dataset: "ChestX-ray14", auc: 0.789, label: "Target Domain" }
+const modelComparison = [
+  { metric: "Macro-AUROC", densenet: 0.6865, resnet: 0.6759, vit: 0.5699 },
+  { metric: "Macro-AUPRC", densenet: 0.1434, resnet: 0.1342, vit: 0.1069 },
 ];
 
-const diseasePerformance = [
-  { disease: "Pneumonia", baseline: 0.734, improved: 0.812 },
-  { disease: "Cardiomegaly", baseline: 0.689, improved: 0.765 },
-  { disease: "Atelectasis", baseline: 0.698, improved: 0.743 },
-  { disease: "Consolidation", baseline: 0.712, improved: 0.789 },
-  { disease: "Edema", baseline: 0.745, improved: 0.823 },
-  { disease: "Pleural Effusion", baseline: 0.671, improved: 0.758 },
-];
-
-const trainingProgress = [
-  { epoch: 0, baseline: 0.650, improved: 0.680 },
-  { epoch: 5, baseline: 0.685, improved: 0.720 },
-  { epoch: 10, baseline: 0.712, improved: 0.789 },
-  { epoch: 15, baseline: 0.712, improved: 0.789 },
-  { epoch: 20, baseline: 0.711, improved: 0.791 },
+const confusionMatrixData = [
+  { model: "DenseNet-121", tn: 4558, fp: 2075, fn: 208, tp: 327 },
+  { model: "ResNet-50", tn: 4359, fp: 2274, fn: 202, tp: 333 },
+  { model: "ViT-B/16", tn: 3601, fp: 3032, fn: 243, tp: 292 },
 ];
 
 export default function ResultsSection() {
@@ -41,70 +31,68 @@ export default function ResultsSection() {
     console.log(`Selected results view: ${view}`);
   };
 
-  const generalizationGapReduction = ((0.789 - 0.712) / (0.847 - 0.712) * 100).toFixed(1);
-
   return (
     <section id="results" className="py-16 bg-muted/30">
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-results-title">
-              Experimental Results & Impact
+              Phase-1 Baseline Results
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto" data-testid="text-results-description">
-              Demonstrating significant improvement in cross-domain generalization for chest X-ray classification
+              Phase-1 baseline results establishing reproducible benchmarks for multi-label chest X-ray classification. Comparing DenseNet-121, ResNet-50, and ViT-B/16 architectures under identical training conditions.
             </p>
           </div>
 
           {/* Key Metrics Cards */}
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="hover-elevate" data-testid="card-gap-reduction">
+            <Card className="hover-elevate" data-testid="card-best-model">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
-                  <TrendingUp className="h-5 w-5 text-chart-3" />
-                  Gap Reduction
+                  <Award className="h-5 w-5 text-chart-3" />
+                  Best Model
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-chart-3" data-testid="text-gap-reduction">
-                  {generalizationGapReduction}%
+                <div className="text-2xl font-bold text-chart-3" data-testid="text-best-model">
+                  DenseNet-121
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Generalization gap reduction on target domain
+                  Macro-AUROC: 68.65% (0.6865)
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="hover-elevate" data-testid="card-performance-improvement">
+            <Card className="hover-elevate" data-testid="card-macro-auroc">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
-                  <Award className="h-5 w-5 text-chart-4" />
-                  Performance Gain
+                  <TrendingUp className="h-5 w-5 text-chart-4" />
+                  Macro-AUROC
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-chart-4" data-testid="text-performance-gain">
-                  +0.077
+                <div className="text-3xl font-bold text-chart-4" data-testid="text-macro-auroc">
+                  0.6865
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  AUC improvement on ChestX-ray14 dataset
+                  DenseNet-121 on mini test set
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="hover-elevate" data-testid="card-statistical-significance">
+            <Card className="hover-elevate" data-testid="card-macro-auprc">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <Target className="h-5 w-5 text-chart-5" />
-                  Statistical Significance
+                  Macro-AUPRC
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-chart-5" data-testid="text-p-value">
-                  p&lt;0.001
+                <div className="text-3xl font-bold text-chart-5" data-testid="text-macro-auprc">
+                  0.1434
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Highly significant improvement achieved
+                  DenseNet-121 on mini test set
                 </p>
               </CardContent>
             </Card>
@@ -117,84 +105,63 @@ export default function ResultsSection() {
               onClick={() => handleViewChange('overview')}
               data-testid="button-overview-view"
             >
-              Performance Overview
+              Model Comparison
             </Button>
             <Button
               variant={selectedView === 'diseases' ? "default" : "outline"}
               onClick={() => handleViewChange('diseases')}
               data-testid="button-diseases-view"
             >
-              Disease-Specific Results
+              Confusion Matrix
             </Button>
             <Button
               variant={selectedView === 'training' ? "default" : "outline"}
               onClick={() => handleViewChange('training')}
               data-testid="button-training-view"
             >
-              Training Progress
+              Phase 2 Plan
             </Button>
           </div>
 
           {/* Overview Results */}
           {selectedView === 'overview' && (
             <div className="space-y-8 animate-in fade-in-50 duration-300" data-testid="content-overview">
-              <div className="grid lg:grid-cols-2 gap-6">
                 <Card className="hover-elevate">
                   <CardHeader>
-                    <CardTitle>Baseline Model Performance</CardTitle>
-                    <CardDescription>Standard DenseNet-121 without domain generalization</CardDescription>
+                  <CardTitle>Model Performance Comparison</CardTitle>
+                  <CardDescription>Macro-AUROC and Macro-AUPRC on mini test set</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <ResponsiveContainer width="100%" height={200}>
-                      <BarChart data={baselineResults}>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={modelComparison}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="dataset" />
-                        <YAxis domain={[0.6, 0.9]} />
+                      <XAxis dataKey="metric" />
+                      <YAxis domain={[0, 0.8]} />
                         <Tooltip />
-                        <Bar dataKey="auc" fill="hsl(var(--chart-1))" />
+                      <Bar dataKey="densenet" fill="hsl(var(--chart-1))" name="DenseNet-121" />
+                      <Bar dataKey="resnet" fill="hsl(var(--chart-2))" name="ResNet-50" />
+                      <Bar dataKey="vit" fill="hsl(var(--chart-3))" name="ViT-B/16" />
                       </BarChart>
                     </ResponsiveContainer>
-                    <div className="mt-4 space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Source Domain (MIMIC-CXR):</span>
-                        <Badge variant="secondary">AUC 0.847</Badge>
+                  <div className="mt-6 grid md:grid-cols-3 gap-4">
+                    {phase1Results.map((result, idx) => (
+                      <div key={idx} className="bg-muted p-4 rounded-md">
+                        <h4 className="font-semibold mb-2">{result.model}</h4>
+                        <div className="space-y-1 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Macro-AUROC:</span>
+                            <Badge variant="secondary">{(result.macroAUROC * 100).toFixed(2)}%</Badge>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Macro-AUPRC:</span>
+                            <Badge variant="secondary">{(result.macroAUPRC * 100).toFixed(2)}%</Badge>
+                          </div>
                       </div>
-                      <div className="flex justify-between text-sm">
-                        <span>Target Domain (ChestX-ray14):</span>
-                        <Badge variant="destructive">AUC 0.712</Badge>
                       </div>
+                    ))}
                     </div>
                   </CardContent>
                 </Card>
-
-                <Card className="hover-elevate">
-                  <CardHeader>
-                    <CardTitle>Improved Model Performance</CardTitle>
-                    <CardDescription>With data augmentation and contrastive learning</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ResponsiveContainer width="100%" height={200}>
-                      <BarChart data={improvedResults}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="dataset" />
-                        <YAxis domain={[0.6, 0.9]} />
-                        <Tooltip />
-                        <Bar dataKey="auc" fill="hsl(var(--chart-3))" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                    <div className="mt-4 space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Source Domain (MIMIC-CXR):</span>
-                        <Badge variant="secondary">AUC 0.851</Badge>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span>Target Domain (ChestX-ray14):</span>
-                        <Badge variant="default">AUC 0.789</Badge>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
 
               <Card className="hover-elevate">
                 <CardHeader>
@@ -206,21 +173,21 @@ export default function ResultsSection() {
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="font-medium mb-3">Quantitative Improvements</h4>
+                      <h4 className="font-medium mb-3">Architecture Performance</h4>
                       <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li>• Reduced generalization gap by {generalizationGapReduction}%</li>
-                        <li>• Maintained source domain performance</li>
-                        <li>• Significant improvement on target domain (p&lt;0.001)</li>
-                        <li>• Consistent gains across all disease categories</li>
+                        <li>• <strong>DenseNet-121</strong> performed best with macro-AUROC 0.6865 (68.65%)</li>
+                        <li>• <strong>ResNet-50</strong> was close (macro-AUROC 0.6759, 67.59%)</li>
+                        <li>• <strong>ViT-B/16</strong> trailed under this short training regime (macro-AUROC 0.5699, 56.99%)</li>
+                        <li>• CNNs remain strong with limited data and brief schedules</li>
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-3">Qualitative Observations</h4>
+                      <h4 className="font-medium mb-3">Observations</h4>
                       <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li>• Grad-CAM shows improved attention on relevant regions</li>
-                        <li>• Better robustness to image quality variations</li>
-                        <li>• Reduced sensitivity to equipment differences</li>
-                        <li>• More consistent performance across patient demographics</li>
+                        <li>• Relatively high false-positive burden at 0.5 threshold</li>
+                        <li>• Per-class threshold tuning needed in next phase</li>
+                        <li>• Transformer typically benefits from more data/epochs or pretraining</li>
+                        <li>• Confusion matrix figures emphasize need for calibration</li>
                       </ul>
                     </div>
                   </div>
@@ -229,28 +196,44 @@ export default function ResultsSection() {
             </div>
           )}
 
-          {/* Disease-Specific Results */}
+          {/* Confusion Matrix Results */}
           {selectedView === 'diseases' && (
             <div className="space-y-6 animate-in fade-in-50 duration-300" data-testid="content-diseases">
               <Card className="hover-elevate">
                 <CardHeader>
-                  <CardTitle>Disease-Specific Performance Comparison</CardTitle>
-                  <CardDescription>AUC scores for individual thoracic conditions on ChestX-ray14</CardDescription>
+                  <CardTitle>Confusion Matrix Results</CardTitle>
+                  <CardDescription>Micro confusion matrix aggregated across classes at fixed probability threshold of 0.5</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={diseasePerformance}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="disease" angle={-45} textAnchor="end" height={80} />
-                      <YAxis domain={[0.6, 0.9]} />
-                      <Tooltip />
-                      <Bar dataKey="baseline" fill="hsl(var(--chart-1))" name="Baseline" />
-                      <Bar dataKey="improved" fill="hsl(var(--chart-3))" name="Improved" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                  <div className="mt-4 text-center">
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {confusionMatrixData.map((data, idx) => (
+                      <div key={idx} className="bg-muted p-4 rounded-md">
+                        <h4 className="font-semibold mb-4 text-center">{data.model}</h4>
+                        <div className="grid grid-cols-2 gap-2 text-sm">
+                          <div className="text-center p-2 bg-background rounded">
+                            <div className="font-medium text-muted-foreground">TN</div>
+                            <div className="text-lg font-bold text-chart-1">{data.tn.toLocaleString()}</div>
+                          </div>
+                          <div className="text-center p-2 bg-background rounded">
+                            <div className="font-medium text-muted-foreground">FP</div>
+                            <div className="text-lg font-bold text-destructive">{data.fp.toLocaleString()}</div>
+                          </div>
+                          <div className="text-center p-2 bg-background rounded">
+                            <div className="font-medium text-muted-foreground">FN</div>
+                            <div className="text-lg font-bold text-destructive">{data.fn.toLocaleString()}</div>
+                          </div>
+                          <div className="text-center p-2 bg-background rounded">
+                            <div className="font-medium text-muted-foreground">TP</div>
+                            <div className="text-lg font-bold text-chart-3">{data.tp.toLocaleString()}</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 bg-muted p-4 rounded-md">
                     <p className="text-sm text-muted-foreground">
-                      Consistent improvement across all disease categories demonstrates robustness of our approach
+                      <strong>Note:</strong> The confusion matrix shows relatively high false-positive burden at the 0.5 threshold, 
+                      motivating per-class threshold tuning and calibration in Phase 2.
                     </p>
                   </div>
                 </CardContent>
@@ -258,40 +241,39 @@ export default function ResultsSection() {
             </div>
           )}
 
-          {/* Training Progress */}
+          {/* Phase 2 Plan */}
           {selectedView === 'training' && (
             <div className="space-y-6 animate-in fade-in-50 duration-300" data-testid="content-training">
               <Card className="hover-elevate">
                 <CardHeader>
-                  <CardTitle>Training Progress on Target Domain</CardTitle>
-                  <CardDescription>AUC score evolution during training on ChestX-ray14</CardDescription>
+                  <CardTitle>Phase 2: Domain Generalization Plan</CardTitle>
+                  <CardDescription>Upcoming implementation of supervised contrastive learning</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={trainingProgress}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="epoch" />
-                      <YAxis domain={[0.6, 0.9]} />
-                      <Tooltip />
-                      <Line 
-                        type="monotone" 
-                        dataKey="baseline" 
-                        stroke="hsl(var(--chart-1))" 
-                        strokeWidth={2}
-                        name="Baseline Model"
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="improved" 
-                        stroke="hsl(var(--chart-3))" 
-                        strokeWidth={2}
-                        name="Improved Model"
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                  <div className="mt-4 text-center">
+                <CardContent className="space-y-4">
+                  <div>
+                    <h4 className="font-medium mb-2">Training Recipe</h4>
+                    <ul className="text-sm text-muted-foreground space-y-2">
+                      <li>• Keep the same train/test split and backbones (DenseNet-121)</li>
+                      <li>• Replace or augment the training objective with a supervised contrastive term</li>
+                      <li>• Generate two augmented views per image (color jitter, blur, mild noise, flip)</li>
+                      <li>• Compute InfoNCE-style contrastive loss over the batch (label-aware positives)</li>
+                      <li>• Combine with BCE via weighted sum (λ ∈ [0.1, 0.5])</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">Evaluation Plan</h4>
+                    <ul className="text-sm text-muted-foreground space-y-2">
+                      <li>• Retrain on the same mini-train with contrastive setup</li>
+                      <li>• Re-evaluate on the same mini-test</li>
+                      <li>• Report macro-AUROC/AUPRC, micro confusion matrices</li>
+                      <li>• Compare directly against Phase-1 baselines</li>
+                      <li>• Use Grad-CAM visualizations to assess attention on relevant lung regions</li>
+                    </ul>
+                  </div>
+                  <div className="bg-muted p-4 rounded-md">
                     <p className="text-sm text-muted-foreground">
-                      Improved model shows faster convergence and higher final performance
+                      <strong>Expected Outcome:</strong> Statistically significant reduction in the performance gap 
+                      between source and target domains, demonstrating improved domain generalization.
                     </p>
                   </div>
                 </CardContent>

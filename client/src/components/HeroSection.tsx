@@ -53,13 +53,11 @@ export default function HeroSection() {
 
           <div className="pt-8">
             <div className="text-sm text-muted-foreground mb-2">
-              Contributing to UN SDGs 3, 9, 10, and 17
+              Contributing to UN SDGs 3 and 10
             </div>
             <div className="flex justify-center space-x-6 text-xs text-muted-foreground">
               <span>Good Health & Well-being</span>
-              <span>Innovation & Infrastructure</span>
               <span>Reduced Inequalities</span>
-              <span>Global Partnerships</span>
             </div>
           </div>
         </div>

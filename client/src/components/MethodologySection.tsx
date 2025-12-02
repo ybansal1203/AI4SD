@@ -89,12 +89,13 @@ export default function MethodologySection() {
                   <CardContent className="space-y-4">
                     <div className="flex flex-wrap gap-2">
                       <Badge>DenseNet-121</Badge>
+                      <Badge>ResNet-50</Badge>
+                      <Badge>ViT-B/16</Badge>
                       <Badge>14-Label Classification</Badge>
-                      <Badge>Transfer Learning</Badge>
                     </div>
                     <p className="text-sm text-muted-foreground">
                       Training on MIMIC-CXR for thoracic disease classification including 
-                      Pneumonia, Cardiomegaly, and 12 other conditions.
+                      Pneumonia, Cardiomegaly, and 12 other conditions. All models trained at 224×224 resolution.
                     </p>
                   </CardContent>
                 </Card>
@@ -104,21 +105,35 @@ export default function MethodologySection() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <TrendingUp className="h-5 w-5 text-chart-3" />
-                    Expected Baseline Results
+                    Training Configuration
                   </CardTitle>
-                  <CardDescription>Quantifying the generalization gap</CardDescription>
+                  <CardDescription>Reproducible Phase-1 baseline setup</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    We hypothesize a significant performance drop (AUC score) when the baseline model 
-                    transitions from MIMIC-CXR test set to ChestX-ray14 test set, demonstrating the 
-                    critical need for domain generalization techniques.
-                  </p>
-                  <div className="bg-muted p-4 rounded-md">
-                    <p className="text-sm text-muted-foreground">
-                      <strong>Success Metric:</strong> Establishing baseline performance gap as foundation 
-                      for measuring improvement in Phase 2
-                    </p>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h4 className="font-medium mb-2 text-sm">Input Preprocessing</h4>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>• Resized/center-cropped to 224×224</li>
+                      <li>• Normalized with ImageNet statistics</li>
+                      <li>• Random horizontal flip (p = 0.5) in training</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2 text-sm">Optimization</h4>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>• Optimizer: AdamW (lr=3×10⁻⁴, weight decay=1×10⁻⁴)</li>
+                      <li>• Loss: BCEWithLogitsLoss with per-class pos_weight for imbalance</li>
+                      <li>• Learning rate: Cosine annealing for 10 epochs</li>
+                      <li>• Batch size: 64</li>
+                      <li>• Mixed precision (AMP) training</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2 text-sm">Evaluation Metrics</h4>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>• Macro AUROC and Macro AUPRC (primary metrics)</li>
+                      <li>• Micro confusion matrix at fixed probability threshold (0.5)</li>
+                    </ul>
                   </div>
                 </CardContent>
               </Card>
@@ -139,13 +154,15 @@ export default function MethodologySection() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="space-y-2">
-                      <Badge variant="outline">Brightness & Contrast Adjustment</Badge>
-                      <Badge variant="outline">Gaussian Noise Addition</Badge>
-                      <Badge variant="outline">Low-Resolution Simulation</Badge>
+                      <Badge variant="outline">Color Jitter</Badge>
+                      <Badge variant="outline">Blur</Badge>
+                      <Badge variant="outline">Mild Noise</Badge>
+                      <Badge variant="outline">Random Flip</Badge>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Heavy augmentation techniques force the model to learn pathological features 
-                      rather than superficial image characteristics.
+                      Generate two augmented views per image to create positive pairs for contrastive learning. 
+                      These medically plausible augmentations simulate acquisition variability and force the model 
+                      to learn pathological features rather than superficial image characteristics.
                     </p>
                   </CardContent>
                 </Card>
@@ -158,12 +175,20 @@ export default function MethodologySection() {
                     </CardTitle>
                     <CardDescription>Learning domain-invariant representations</CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-3">
-                      Creating positive-negative pairs from augmented data to shape the embedding space, 
-                      pulling together semantically similar views while pushing apart dissimilar samples.
+                  <CardContent className="space-y-3">
+                    <p className="text-sm text-muted-foreground">
+                      InfoNCE-style contrastive loss over the batch with label-aware positives. 
+                      Pulls together different views of the same labeled sample and pushes apart 
+                      samples with dissimilar labels.
                     </p>
+                    <div className="space-y-2">
                     <Badge variant="secondary">Domain-Invariant Features</Badge>
+                      <Badge variant="secondary">Label-Aware Positives</Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Combined with BCE via weighted sum (λ ∈ [0.1, 0.5]) to maintain multi-label 
+                      prediction performance while learning robust representations.
+                    </p>
                   </CardContent>
                 </Card>
               </div>

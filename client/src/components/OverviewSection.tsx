@@ -12,8 +12,7 @@ export default function OverviewSection() {
               Bridging the Generalization Gap in Medical AI
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto" data-testid="text-overview-description">
-              Medical AI models often fail when deployed in clinical environments different from their training data. 
-              Our research addresses this critical challenge for equitable healthcare.
+              Medical AI models often show a significant performance drop when deployed in clinical environments different from the dataset they were trained on. This "generalization gap" is a major barrier to equitable healthcare, particularly for disadvantaged institutions with older equipment or different patient demographics.
             </p>
           </div>
 
@@ -42,11 +41,9 @@ export default function OverviewSection() {
                 Our Solution
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+              <CardContent className="space-y-4">
               <p className="text-muted-foreground">
-                We develop robust deep learning models using advanced data augmentation and supervised 
-                contrastive learning to create domain-invariant features that generalize across diverse 
-                clinical environments.
+                We develop robust deep learning models for multi-label thoracic disease classification. Initially, we quantify the performance degradation of a standard AI model when transitioning from a high-quality, single-source dataset (MIMIC-CXR) to a more diverse, multisource dataset (ChestX-ray14). Then, we implement and validate a domain generalization strategy using advanced data augmentation and supervised contrastive learning to create domain-invariant features that generalize across diverse clinical environments.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" data-testid="badge-densenet">DenseNet-121 Architecture</Badge>
@@ -88,9 +85,7 @@ export default function OverviewSection() {
               <CardContent>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li>• <strong>SDG 3:</strong> Good Health and Well-being</li>
-                  <li>• <strong>SDG 9:</strong> Industry, Innovation and Infrastructure</li>
                   <li>• <strong>SDG 10:</strong> Reduced Inequalities</li>
-                  <li>• <strong>SDG 17:</strong> Partnerships for the Goals</li>
                 </ul>
               </CardContent>
             </Card>
