@@ -46,7 +46,7 @@ export default function OverviewSection() {
                 We develop robust deep learning models for multi-label thoracic disease classification. Initially, we quantify the performance degradation of a standard AI model when transitioning from a high-quality, single-source dataset (MIMIC-CXR) to a more diverse, multisource dataset (ChestX-ray14). Then, we implement and validate a domain generalization strategy using advanced data augmentation and supervised contrastive learning to create domain-invariant features that generalize across diverse clinical environments.
               </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" data-testid="badge-densenet">DenseNet-121 Architecture</Badge>
+                <Badge variant="secondary" data-testid="badge-architectures">ResNet-50 / EfficientNet-B0 / ViT-B/16</Badge>
                 <Badge variant="secondary" data-testid="badge-augmentation">Data Augmentation</Badge>
                 <Badge variant="secondary" data-testid="badge-contrastive">Contrastive Learning</Badge>
                 <Badge variant="secondary" data-testid="badge-multilabel">Multi-label Classification</Badge>

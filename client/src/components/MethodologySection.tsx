@@ -64,15 +64,15 @@ export default function MethodologySection() {
                     <div>
                       <Badge variant="secondary" className="mb-2">Source Domain</Badge>
                       <p className="text-sm text-muted-foreground">
-                        <strong>MIMIC-CXR:</strong> High-quality, single-source dataset from U.S. medical center. 
-                        Used for training and internal validation.
+                        <strong>MIMIC-CXR:</strong> High-quality, single institution dataset with 3,710 images 
+                        with human-verified annotations. Used for training and validation.
                       </p>
                     </div>
                     <div>
                       <Badge variant="secondary" className="mb-2">Target Domain</Badge>
                       <p className="text-sm text-muted-foreground">
-                        <strong>ChestX-ray14 (NIH):</strong> Heterogeneous, multi-source dataset representing 
-                        real-world deployment scenarios. Used for final testing.
+                        <strong>ChestX-ray14 (NIH):</strong> Multi-hospital, noisy, realistic dataset with 
+                        112,120 images with NLP-mined disease labels (&gt;90% precision). Used for test only.
                       </p>
                     </div>
                   </CardContent>
@@ -88,8 +88,8 @@ export default function MethodologySection() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex flex-wrap gap-2">
-                      <Badge>DenseNet-121</Badge>
                       <Badge>ResNet-50</Badge>
+                      <Badge>EfficientNet-B0</Badge>
                       <Badge>ViT-B/16</Badge>
                       <Badge>14-Label Classification</Badge>
                     </div>
@@ -121,18 +121,22 @@ export default function MethodologySection() {
                   <div>
                     <h4 className="font-medium mb-2 text-sm">Optimization</h4>
                     <ul className="text-sm text-muted-foreground space-y-1">
-                      <li>• Optimizer: AdamW (lr=3×10⁻⁴, weight decay=1×10⁻⁴)</li>
+                      <li>• Optimizer: AdamW</li>
                       <li>• Loss: BCEWithLogitsLoss with per-class pos_weight for imbalance</li>
-                      <li>• Learning rate: Cosine annealing for 10 epochs</li>
-                      <li>• Batch size: 64</li>
+                      <li>• Batch size: 128</li>
+                      <li>• 10 epochs (models converged quickly in preliminary runs)</li>
                       <li>• Mixed precision (AMP) training</li>
+                      <li>• Linear Probing: backbone weights frozen, only final classification layer trained</li>
+                      <li>• All models initialized with ImageNet pretrained weights</li>
                     </ul>
                   </div>
                   <div>
                     <h4 className="font-medium mb-2 text-sm">Evaluation Metrics</h4>
                     <ul className="text-sm text-muted-foreground space-y-1">
-                      <li>• Macro AUROC and Macro AUPRC (primary metrics)</li>
-                      <li>• Micro confusion matrix at fixed probability threshold (0.5)</li>
+                      <li>• F1 Micro: TP/FP/FN over all labels and samples jointly</li>
+                      <li>• F1 Macro: Average F1 per disease label over 14 labels</li>
+                      <li>• ROC-AUC Macro: Area under ROC curve for each label, then macro average</li>
+                      <li>• mAP (mean Average Precision): Average precision per label from precision-recall curve</li>
                     </ul>
                   </div>
                 </CardContent>

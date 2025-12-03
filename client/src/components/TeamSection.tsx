@@ -25,7 +25,7 @@ const teamMembers = [
     name: "Yash Bansal",
     email: "ybansal@usc.edu",
     initials: "YB",
-    contributions: ["Related Work Literature Reviews", "Data Visualization and Web Development"]
+    contributions: ["Related Work Literature Reviews", "Data Implementation and Development"]
   }
 ];
 
