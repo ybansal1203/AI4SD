@@ -39,29 +39,31 @@ export default function ResultsSection() {
   };
 
   return (
-    <section id="results" className="py-16 bg-muted/30">
+    <section id="results" className="py-12 sm:py-16 bg-muted/30">
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-results-title">
               Experimental Results
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto" data-testid="text-results-description">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto px-4" data-testid="text-results-description">
               Comparing ResNet-50, EfficientNet-B0, and ViT-B/16 architectures under supervised learning and supervised contrastive learning approaches. Results evaluated on ChestX-ray14 test set.
             </p>
           </div>
 
           {/* Method Selection */}
-          <div className="flex justify-center gap-2 flex-wrap mb-6">
+          <div className="flex justify-center gap-2 flex-wrap mb-6 px-2">
             <Button
               variant={selectedMethod === 'supervised' ? "default" : "outline"}
               onClick={() => setSelectedMethod('supervised')}
+              className="text-sm sm:text-base px-3 sm:px-4"
             >
               Supervised Learning
             </Button>
             <Button
               variant={selectedMethod === 'contrastive' ? "default" : "outline"}
               onClick={() => setSelectedMethod('contrastive')}
+              className="text-sm sm:text-base px-3 sm:px-4"
             >
               Supervised Contrastive Learning
             </Button>
@@ -159,10 +161,11 @@ export default function ResultsSection() {
           </div>
 
           {/* Results View Selection */}
-          <div className="flex justify-center gap-2 flex-wrap">
+          <div className="flex justify-center gap-2 flex-wrap px-2">
             <Button
               variant={selectedView === 'overview' ? "default" : "outline"}
               onClick={() => handleViewChange('overview')}
+              className="text-xs sm:text-sm px-3 sm:px-4"
               data-testid="button-overview-view"
             >
               Model Comparison
@@ -170,6 +173,7 @@ export default function ResultsSection() {
             <Button
               variant={selectedView === 'diseases' ? "default" : "outline"}
               onClick={() => handleViewChange('diseases')}
+              className="text-xs sm:text-sm px-3 sm:px-4"
               data-testid="button-diseases-view"
             >
               Evaluation Metrics
@@ -177,6 +181,7 @@ export default function ResultsSection() {
             <Button
               variant={selectedView === 'training' ? "default" : "outline"}
               onClick={() => handleViewChange('training')}
+              className="text-xs sm:text-sm px-3 sm:px-4"
               data-testid="button-training-view"
             >
               Training Details
@@ -192,18 +197,27 @@ export default function ResultsSection() {
                   <CardDescription>{selectedMethod === 'contrastive' ? 'Supervised Contrastive Learning' : 'Supervised Learning'} results on ChestX-ray14 test set</CardDescription>
                   </CardHeader>
                   <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={getModelComparison(selectedMethod)}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="metric" />
-                      <YAxis domain={[0, 80]} />
-                        <Tooltip formatter={(value) => `${value}%`} />
-                      <Bar dataKey="vit" fill="hsl(var(--chart-1))" name="ViT-B/16" />
-                      <Bar dataKey="efficientnet" fill="hsl(var(--chart-2))" name="EfficientNet-B0" />
-                      <Bar dataKey="resnet" fill="hsl(var(--chart-3))" name="ResNet-50" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  <div className="mt-6 grid md:grid-cols-3 gap-4">
+                  <div className="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                    <ResponsiveContainer width="100%" minWidth={300} height={250} className="sm:h-[300px]">
+                      <BarChart data={getModelComparison(selectedMethod)} margin={{ top: 5, right: 10, left: 0, bottom: 60 }}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis 
+                          dataKey="metric" 
+                          angle={-45}
+                          textAnchor="end"
+                          height={60}
+                          tick={{ fontSize: 10 }}
+                          interval={0}
+                        />
+                        <YAxis domain={[0, 80]} tick={{ fontSize: 10 }} />
+                          <Tooltip formatter={(value) => `${value}%`} />
+                        <Bar dataKey="vit" fill="hsl(var(--chart-1))" name="ViT-B/16" />
+                        <Bar dataKey="efficientnet" fill="hsl(var(--chart-2))" name="EfficientNet-B0" />
+                        <Bar dataKey="resnet" fill="hsl(var(--chart-3))" name="ResNet-50" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                  </div>
+                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {(selectedMethod === 'contrastive' ? supervisedContrastiveResults : supervisedLearningResults).map((result, idx) => (
                       <div key={idx} className="bg-muted p-4 rounded-md">
                         <h4 className="font-semibold mb-2">{result.model}</h4>

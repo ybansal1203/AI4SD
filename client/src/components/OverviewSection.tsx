@@ -4,14 +4,14 @@ import { Heart, Users, Target, Globe } from "lucide-react";
 
 export default function OverviewSection() {
   return (
-    <section id="overview" className="py-16 bg-muted/30">
+    <section id="overview" className="py-12 sm:py-16 bg-muted/30">
       <div className="container px-4">
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-overview-title">
               Bridging the Generalization Gap in Medical AI
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto" data-testid="text-overview-description">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto px-4" data-testid="text-overview-description">
               Medical AI models often show a significant performance drop when deployed in clinical environments different from the dataset they were trained on. This "generalization gap" is a major barrier to equitable healthcare, particularly for disadvantaged institutions with older equipment or different patient demographics.
             </p>
           </div>
@@ -46,10 +46,10 @@ export default function OverviewSection() {
                 We develop robust deep learning models for multi-label thoracic disease classification. Initially, we quantify the performance degradation of a standard AI model when transitioning from a high-quality, single-source dataset (MIMIC-CXR) to a more diverse, multisource dataset (ChestX-ray14). Then, we implement and validate a domain generalization strategy using advanced data augmentation and supervised contrastive learning to create domain-invariant features that generalize across diverse clinical environments.
               </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" data-testid="badge-architectures">ResNet-50 / EfficientNet-B0 / ViT-B/16</Badge>
-                <Badge variant="secondary" data-testid="badge-augmentation">Data Augmentation</Badge>
-                <Badge variant="secondary" data-testid="badge-contrastive">Contrastive Learning</Badge>
-                <Badge variant="secondary" data-testid="badge-multilabel">Multi-label Classification</Badge>
+                <Badge variant="secondary" data-testid="badge-architectures" className="text-xs">ResNet-50 / EfficientNet-B0 / ViT-B/16</Badge>
+                <Badge variant="secondary" data-testid="badge-augmentation" className="text-xs">Data Augmentation</Badge>
+                <Badge variant="secondary" data-testid="badge-contrastive" className="text-xs">Contrastive Learning</Badge>
+                <Badge variant="secondary" data-testid="badge-multilabel" className="text-xs">Multi-label Classification</Badge>
               </div>
             </CardContent>
           </Card>

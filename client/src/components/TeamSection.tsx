@@ -31,14 +31,14 @@ const teamMembers = [
 
 export default function TeamSection() {
   return (
-    <section id="team" className="py-16">
+    <section id="team" className="py-12 sm:py-16">
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-team-title">
               Meet the AI4SD Team
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto" data-testid="text-team-description">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto px-4" data-testid="text-team-description">
               A dedicated group of researchers working towards equitable and robust medical AI systems
             </p>
           </div>

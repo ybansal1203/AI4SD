@@ -14,37 +14,37 @@ export default function MethodologySection() {
   };
 
   return (
-    <section id="methodology" className="py-16">
+    <section id="methodology" className="py-12 sm:py-16">
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-methodology-title">
               Two-Phase Research Methodology
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto" data-testid="text-methodology-description">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto px-4" data-testid="text-methodology-description">
               Our systematic approach quantifies the generalization gap and implements domain-invariant solutions
             </p>
           </div>
 
           {/* Phase Selection */}
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-2">
             <Button
               variant={selectedPhase === 1 ? "default" : "outline"}
               onClick={() => handlePhaseClick(1)}
-              className="flex items-center gap-2"
+              className="flex items-center justify-center gap-2 text-sm sm:text-base px-4 py-2"
               data-testid="button-phase-1"
             >
-              <Database className="h-4 w-4" />
-              Phase 1: Baseline & Problem Quantification
+              <Database className="h-4 w-4 flex-shrink-0" />
+              <span className="text-center">Phase 1: Baseline & Problem Quantification</span>
             </Button>
             <Button
               variant={selectedPhase === 2 ? "default" : "outline"}
               onClick={() => handlePhaseClick(2)}
-              className="flex items-center gap-2"
+              className="flex items-center justify-center gap-2 text-sm sm:text-base px-4 py-2"
               data-testid="button-phase-2"
             >
-              <Brain className="h-4 w-4" />
-              Phase 2: Domain Generalization
+              <Brain className="h-4 w-4 flex-shrink-0" />
+              <span className="text-center">Phase 2: Domain Generalization</span>
             </Button>
           </div>
 
@@ -157,11 +157,11 @@ export default function MethodologySection() {
                     <CardDescription>Simulating real-world imaging variations</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <div className="space-y-2">
-                      <Badge variant="outline">Color Jitter</Badge>
-                      <Badge variant="outline">Blur</Badge>
-                      <Badge variant="outline">Mild Noise</Badge>
-                      <Badge variant="outline">Random Flip</Badge>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="outline" className="text-xs">Color Jitter</Badge>
+                      <Badge variant="outline" className="text-xs">Blur</Badge>
+                      <Badge variant="outline" className="text-xs">Mild Noise</Badge>
+                      <Badge variant="outline" className="text-xs">Random Flip</Badge>
                     </div>
                     <p className="text-sm text-muted-foreground">
                       Generate two augmented views per image to create positive pairs for contrastive learning. 

@@ -75,11 +75,11 @@ export default function Footer() {
           <Separator />
 
           {/* Footer Bottom */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-muted-foreground px-2">
+            <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
               <span className="font-bold text-primary" data-testid="text-footer-logo">AI4SD</span>
-              <span>•</span>
-              <span>Robust Domain-Generalizable AI for Chest X-Ray Disease Classification</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="text-center">Robust Domain-Generalizable AI for Chest X-Ray Disease Classification</span>
             </div>
             <div className="text-center md:text-right">
               <p data-testid="text-copyright">
