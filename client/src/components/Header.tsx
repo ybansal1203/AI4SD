@@ -22,7 +22,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["overview", "methodology", "results", "team"];
+      const sections = ["overview", "methodology", "results", "notebook", "team"];
       const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -80,6 +80,17 @@ export default function Header() {
             data-testid="link-results"
           >
             Results
+          </button>
+          <button
+            onClick={() => scrollToSection("notebook")}
+            className={`text-sm font-medium transition-colors ${
+              activeSection === "notebook" 
+                ? "text-primary border-b-2 border-primary pb-1" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+            data-testid="link-notebook"
+          >
+            Notebook
           </button>
           <button
             onClick={() => scrollToSection("team")}
@@ -152,6 +163,17 @@ export default function Header() {
               data-testid="mobile-link-results"
             >
               Results
+            </button>
+            <button
+              onClick={() => scrollToSection("notebook")}
+              className={`text-sm font-medium transition-colors text-left ${
+                activeSection === "notebook" 
+                  ? "text-primary font-semibold" 
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              data-testid="mobile-link-notebook"
+            >
+              Notebook
             </button>
             <button
               onClick={() => scrollToSection("team")}
